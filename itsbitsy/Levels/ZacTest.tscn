@@ -1,3 +1,44 @@
-[gd_scene format=3 uid="uid://cy4twxwyc0kyo"]
+[gd_scene load_steps=4 format=3 uid="uid://cy4twxwyc0kyo"]
+
+[ext_resource type="Texture2D" uid="uid://cuc51d7lvdjpg" path="res://Art/BrownTexture.png" id="1_i8d4j"]
+[ext_resource type="PackedScene" uid="uid://cpr172uk3vnmn" path="res://Spider/Spider.tscn" id="2_jyb26"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fdfov"]
+size = Vector2(31, 246)
 
 [node name="ZacTest" type="Node2D"]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(395, 596)
+scale = Vector2(3.35391, 3.26606)
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D"]
+position = Vector2(0, -108)
+scale = Vector2(1, 7.75)
+texture = ExtResource("1_i8d4j")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(-0.5, -108)
+shape = SubResource("RectangleShape2D_fdfov")
+debug_color = Color(0.123546, 0.59759, 0.685568, 0.42)
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="."]
+position = Vector2(464, 134)
+rotation = 1.56968
+scale = Vector2(2.15987, 2.64009)
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D2"]
+position = Vector2(0, -108)
+scale = Vector2(1, 7.75)
+texture = ExtResource("1_i8d4j")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2"]
+position = Vector2(-0.5, -108)
+shape = SubResource("RectangleShape2D_fdfov")
+
+[node name="Spider" parent="." instance=ExtResource("2_jyb26")]
+position = Vector2(404, 303)
+skew = -0.000368714
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(574, 325)
