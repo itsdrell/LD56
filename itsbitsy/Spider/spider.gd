@@ -1,7 +1,6 @@
 extends Area2D
 
 @export var speed = 100 # How fast the player will move (pixels/sec).
-
 var edgeOfSprite 
 var nextToSpider
 var DesiredPosition
@@ -39,6 +38,9 @@ func _process(delta):
 	else:
 		WebModeUpdate(delta);
 	
+	var checkOverlaps = $Check.get_overlapping_bodies();
+	print(checkOverlaps)
+	
 	queue_redraw()
 	
 func WebModeUpdate(delta):
@@ -50,12 +52,9 @@ func WebModeUpdate(delta):
 		angleV -= SwingInputForce * delta
 	if Input.is_action_just_released("move_right"):
 		angleV += SwingInputForce * delta
-	#if Input.is_action_just_released("interact"):
-		#var newWeb = WebScene.instantiate()
-		#newWeb.add_point(StartingWebAnchorPoint)
-		#newWeb.add_point(position)
-		#newWeb.position = StartingWebAnchorPoint
-		#add_child(newWeb)
+	if Input.is_action_just_released("interact"):
+		EndWebMode()
+		return
 
 	var force = SwingGravity * sin(angle)
 	angleA = (-1 * force) / WebLength
@@ -69,9 +68,20 @@ func WebModeUpdate(delta):
 	
 	angleV *= .99
 	
+func EndWebMode() :
+	var newWeb = WebScene.instantiate()
+	newWeb.add_point(to_local(StartingWebAnchorPoint))
+	newWeb.add_point(to_local(position))
+	newWeb.position = position
+	DesiredPosition = position
+	owner.add_child(newWeb)
+	
+	inWebMode = false
+	WebLength = AddedWebLength
+
 func UpdateNormalMovement(delta):
 	
-	if Input.is_action_pressed("interact"):
+	if Input.is_action_just_released("interact"):
 		inWebMode = true 
 		StartingWebAnchorPoint = position
 		return
