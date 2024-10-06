@@ -6,7 +6,7 @@
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_tiluj"]
 resource_local_to_scene = true
 
-[node name="Web" type="Line2D"]
+[node name="Web" type="Line2D" groups=["Web"]]
 auto_translate_mode = 2
 z_index = -1
 texture = ExtResource("1_bb12g")
