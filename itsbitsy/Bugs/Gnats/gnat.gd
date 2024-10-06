@@ -9,9 +9,6 @@ var wanderMax = 0 #set in ready by the WanderArea shape
 var targetPosition = Vector2.ZERO
 var velocity = Vector2.ZERO
 
-#captured vars
-var captured : bool = false
-
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	$WaitTimer.start(randf_range(0.5,1))
@@ -20,8 +17,6 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if not captured : move(delta)
-	
-	#test()
 	#queue_redraw()
 
 func test() :
