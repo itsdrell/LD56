@@ -7,6 +7,8 @@ var DesiredPosition
 
 var inWebMode = false;
 var StartingWebAnchorPoint;
+var OriginalThreadAmountPercent = 0.0;
+var isColliding = false;
 
 var angle = PI / 4
 var angleV = 0 
@@ -17,8 +19,12 @@ var angleA = 0
 @export var AddedWebLength = 32
 @export var WebScene : PackedScene
 
-@export var ThreadConsumeRate = 5;
+@export var ThreadConsumeRate = .5;
+@export var ThreadRegenSpeed = 10
 @export var PercentOfThreadLeft = 100;
+
+var canExit = false;
+var distanceNeeded = 16
 
 var thePrey : Bug
 
@@ -38,10 +44,15 @@ func _process(delta):
 	
 	if !inWebMode:
 		UpdateNormalMovement(delta);
+		PercentOfThreadLeft += ThreadRegenSpeed * delta
+		PercentOfThreadLeft = clamp(PercentOfThreadLeft, 0, 100)
 	else:
 		WebModeUpdate(delta);
 	
 	var checkOverlaps = $Check.get_overlapping_bodies();
+	
+	if get_overlapping_bodies().size() == 0 :
+		isColliding = false
 	
 	#todo can make this not in tick but w/e
 	var progressBar = $SpiderHUDControl.get_node("SilkBar")
@@ -50,19 +61,57 @@ func _process(delta):
 	queue_redraw()
 	
 func WebModeUpdate(delta):
+	if !isColliding :
+		WebModeSwingMovement(delta)
+	else:
+		ResetWebSwingVars()
+		WebModeWalkingMovement(delta)
+		
+	if Input.is_action_just_released("interact") and isColliding:
+		EndWebMode(true)
+		return
+	
+	# if we have gone back tot he start just exit the mode
+	var distanceFromStart = StartingWebAnchorPoint.distance_to(position)
+	if canExit and distanceFromStart <= 1 :
+		EndWebMode(false) 
+		return 
+	else :
+		if distanceFromStart > distanceNeeded :
+			canExit = true
+		
+	PercentOfThreadLeft = OriginalThreadAmountPercent - (distanceFromStart * ThreadConsumeRate)
+
+func ResetWebSwingVars() :
+	DesiredPosition = position
+	
+func WebModeWalkingMovement(delta) :
+	var velocity = CalculateVelocity()
+	
+	# dont move unless its to give back web if you are out
+	if PercentOfThreadLeft <= 0 :
+		var pos = position + (velocity * delta * speed)
+		var currentDistance = StartingWebAnchorPoint.distance_to(position)
+		var newDistance = StartingWebAnchorPoint.distance_to(pos)
+		
+		if newDistance > currentDistance :
+			return
+	
+	position += (velocity * delta * speed)
+
+func WebModeSwingMovement(delta) :
 	var desired_velocity = Vector2.ZERO # The player's movement vector.
 	if Input.is_action_pressed("move_down") and PercentOfThreadLeft > 0:
 		WebLength += AddedWebLength * delta
-		PercentOfThreadLeft -= ThreadConsumeRate * delta
+		
+	if Input.is_action_pressed("move_up") :
+		WebLength -= AddedWebLength * delta
 		
 	if Input.is_action_just_released("move_left"):
 		angleV -= SwingInputForce * delta
 	if Input.is_action_just_released("move_right"):
 		angleV += SwingInputForce * delta
-	if Input.is_action_just_released("interact"):
-		EndWebMode()
-		return
-
+	
 	var force = SwingGravity * sin(angle)
 	angleA = (-1 * force) / WebLength
 	angleV += angleA
@@ -73,17 +122,20 @@ func WebModeUpdate(delta):
 	
 	position = Vector2(xPos, yPos);
 	
-	angleV *= .99
+	angleV *= .99	
 	
-func EndWebMode() :
-	var newWeb = WebScene.instantiate()
-	newWeb.add_point(to_local(StartingWebAnchorPoint))
-	newWeb.add_point(to_local(position))
-	newWeb.position = position
+func EndWebMode(spawnWeb) :
+	
+	if spawnWeb :
+		var newWeb = WebScene.instantiate()
+		newWeb.add_point(to_local(StartingWebAnchorPoint))
+		newWeb.add_point(to_local(position))
+		newWeb.position = position
+		owner.add_child(newWeb)
+	
 	DesiredPosition = position
-	owner.add_child(newWeb)
-	
 	inWebMode = false
+	canExit = false;
 	WebLength = AddedWebLength
 
 func OnInteract() :
@@ -97,6 +149,7 @@ func OnInteract() :
 	if PercentOfThreadLeft > 0 : 
 		inWebMode = true 
 		StartingWebAnchorPoint = position
+		OriginalThreadAmountPercent = PercentOfThreadLeft
 		return true
 		
 	return false
@@ -157,6 +210,7 @@ func _on_body_entered(body: Node2D) -> void:
 	if body.owner is Web :
 		body.owner.isSpiderOnMe = true
 		
+	isColliding = true;
 
 func _on_body_exited(body: Node2D) -> void:
 	if body.owner is Web :
