@@ -1,11 +1,16 @@
-extends Node2D
+extends Bug
+signal hit
 
 @export var speed = 20 #pixels/sec
 @export var wanderStep = 45 #distance between each wander
 
+#movement vars
 var wanderMax = 0 #set in ready by the WanderArea shape
 var targetPosition = Vector2.ZERO
 var velocity = Vector2.ZERO
+
+#captured vars
+var captured : bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -14,9 +19,13 @@ func _ready() -> void:
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	move(delta)	
+	if not captured : move(delta)
+	test()
 	#queue_redraw()
 
+func test() :
+	print("child")
+	super.test()
 #func _draw() -> void:
 	#draw_circle($InitialSpawnPoint.position, wanderMax, Color.SKY_BLUE)
 	#draw_circle($InitialSpawnPoint.position, 3, Color.YELLOW)
@@ -41,3 +50,11 @@ func pickPoint():
 	
 func _on_wait_timer_timeout() -> void:
 	pickPoint()
+
+func _on_gnat_body_entered(body: Node2D) -> void:
+	if (body.name == "web") and not captured : 
+		captured = true
+		$GnatBody/AnimatedSprite2D.stop()
+		$GnatBody/AnimatedSprite2D.play("captured")
+		$capturedTimer.start()
+	

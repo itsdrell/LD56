@@ -1,6 +1,7 @@
-[gd_scene load_steps=20 format=3 uid="uid://dnbulb6vix5l1"]
+[gd_scene load_steps=21 format=3 uid="uid://dnbulb6vix5l1"]
 
 [ext_resource type="Script" path="res://Bugs/Gnats/gnat.gd" id="1_efcg3"]
+[ext_resource type="Texture2D" uid="uid://bq28yi7a1xctv" path="res://Art/WhiteTexture.png" id="2_4iq20"]
 [ext_resource type="Texture2D" uid="uid://1gek7wmrxq8" path="res://Art/GnatFlight.png" id="2_wtq6s"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_x7ple"]
@@ -111,8 +112,16 @@ animations = [{
 "texture": SubResource("AtlasTexture_s44rv")
 }],
 "loop": true,
-"name": &"default",
+"name": &"Flight",
 "speed": 14.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_4iq20")
+}],
+"loop": true,
+"name": &"captured",
+"speed": 5.0
 }]
 
 [node name="Gnat" type="Node2D"]
@@ -125,10 +134,12 @@ wait_time = 2.0
 one_shot = true
 autostart = true
 
+[node name="CapturedTimer" type="Timer" parent="."]
+
 [node name="WanderArea" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_x7ple")
 
-[node name="GnatBody" type="StaticBody2D" parent="." groups=["Bugs"]]
+[node name="GnatBody" type="Area2D" parent="." groups=["Bugs"]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GnatBody"]
 rotation = 1.5708
@@ -138,7 +149,8 @@ debug_color = Color(0.768627, 0.313726, 0, 1)
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="GnatBody"]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_b0465")
-autoplay = "default"
-frame_progress = 0.613921
+animation = &"captured"
+autoplay = "Flight"
 
 [connection signal="timeout" from="WaitTimer" to="." method="_on_wait_timer_timeout"]
+[connection signal="body_entered" from="GnatBody" to="." method="_on_gnat_body_entered"]

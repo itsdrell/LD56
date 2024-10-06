@@ -6,10 +6,10 @@
 
 [node name="SilkBar" type="ProgressBar" parent="."]
 texture_filter = 1
-offset_left = 56.0
+offset_left = 55.0
 offset_top = 586.0
-offset_right = 188.0
-offset_bottom = 616.0
+offset_right = 187.0
+offset_bottom = 622.0
 value = 50.0
 show_percentage = false
 
