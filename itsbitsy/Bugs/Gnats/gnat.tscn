@@ -128,7 +128,7 @@ autostart = true
 [node name="WanderArea" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_x7ple")
 
-[node name="GnatBody" type="StaticBody2D" parent="."]
+[node name="GnatBody" type="StaticBody2D" parent="." groups=["Bugs"]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GnatBody"]
 rotation = 1.5708
