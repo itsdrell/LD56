@@ -1,8 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://cpr172uk3vnmn"]
+[gd_scene load_steps=8 format=3 uid="uid://cpr172uk3vnmn"]
 
-[ext_resource type="Texture2D" uid="uid://bq28yi7a1xctv" path="res://Art/WhiteTexture.png" id="1_ksbqi"]
 [ext_resource type="Script" path="res://Spider/spider.gd" id="1_nrr8b"]
-[ext_resource type="PackedScene" uid="uid://bdt6jh1dm8eo3" path="res://Web/Web.tscn" id="2_ykrpw"]
+[ext_resource type="Texture2D" uid="uid://d67srvsfwtmu" path="res://Art/Spider.png" id="2_0clo6"]
+[ext_resource type="PackedScene" uid="uid://b8b43ee1m2u14" path="res://UI/SpiderHUD/SpiderHUD.tscn" id="3_c2pgc"]
+
+[sub_resource type="Resource" id="Resource_3dpy8"]
+metadata/__load_path__ = "res://Web/Web.tscn"
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ghfy0"]
 radius = 16.0
@@ -10,13 +13,28 @@ radius = 16.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_xfldv"]
 radius = 13.0
 
+[sub_resource type="GDScript" id="GDScript_errno"]
+script/source = "extends Camera2D
+
+@export var worldBounds : Shape2D
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+"
+
 [node name="Spider" type="Area2D"]
 script = ExtResource("1_nrr8b")
-WebScene = ExtResource("2_ykrpw")
+WebScene = SubResource("Resource_3dpy8")
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_ksbqi")
+texture_filter = 1
+texture = ExtResource("2_0clo6")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_ghfy0")
@@ -27,3 +45,13 @@ debug_color = Color(0.598052, 0.370692, 1, 0.42)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Check"]
 shape = SubResource("CircleShape2D_xfldv")
 debug_color = Color(0.880906, 0.24701, 0.584212, 0.42)
+
+[node name="FollowCamera" type="Camera2D" parent="."]
+zoom = Vector2(2, 2)
+limit_left = 0
+limit_top = 0
+limit_smoothed = true
+position_smoothing_enabled = true
+script = SubResource("GDScript_errno")
+
+[node name="SpiderHUDControl" parent="." instance=ExtResource("3_c2pgc")]

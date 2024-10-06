@@ -18,6 +18,9 @@ var angleA = 0
 @export var AddedWebLength = 32
 @export var WebScene : PackedScene
 
+#camera stuff
+@export var WorldBounds : RectangleShape2D
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	DesiredPosition = position

@@ -1,0 +1,34 @@
+[gd_scene load_steps=2 format=3 uid="uid://b8b43ee1m2u14"]
+
+[ext_resource type="Texture2D" uid="uid://bq28yi7a1xctv" path="res://Art/WhiteTexture.png" id="1_v6uxp"]
+
+[node name="SpiderHUDControl" type="CanvasLayer"]
+
+[node name="Panel" type="Panel" parent="."]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -78.0
+offset_right = 210.0
+offset_bottom = -8.0
+grow_vertical = 0
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="Panel"]
+offset_left = 5.0
+offset_top = 27.0
+offset_right = 155.0
+offset_bottom = 67.0
+nine_patch_stretch = true
+stretch_margin_left = 190
+texture_under = ExtResource("1_v6uxp")
+texture_progress = ExtResource("1_v6uxp")
+tint_under = Color(0.151276, 0.151276, 0.151276, 1)
+tint_over = Color(0.560955, 0.560955, 0.560955, 1)
+
+[node name="Label" type="Label" parent="Panel"]
+offset_left = 6.0
+offset_top = 4.0
+offset_right = 46.0
+offset_bottom = 27.0
+text = "SILK"

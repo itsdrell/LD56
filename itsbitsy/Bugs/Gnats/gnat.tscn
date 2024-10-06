@@ -1,14 +1,122 @@
-[gd_scene load_steps=4 format=3 uid="uid://dnbulb6vix5l1"]
+[gd_scene load_steps=20 format=3 uid="uid://dnbulb6vix5l1"]
 
 [ext_resource type="Script" path="res://Bugs/Gnats/gnat.gd" id="1_efcg3"]
-[ext_resource type="Texture2D" uid="uid://bq28yi7a1xctv" path="res://Art/WhiteTexture.png" id="2_4iq20"]
+[ext_resource type="Texture2D" uid="uid://1gek7wmrxq8" path="res://Art/GnatFlight.png" id="2_wtq6s"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_w7en2"]
-radius = 15.0
+[sub_resource type="CircleShape2D" id="CircleShape2D_x7ple"]
+radius = 40.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_o5jq8"]
+radius = 8.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7bwoq"]
+atlas = ExtResource("2_wtq6s")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_upjco"]
+atlas = ExtResource("2_wtq6s")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5m8dc"]
+atlas = ExtResource("2_wtq6s")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5fk30"]
+atlas = ExtResource("2_wtq6s")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u8t8d"]
+atlas = ExtResource("2_wtq6s")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qcb01"]
+atlas = ExtResource("2_wtq6s")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r8ut6"]
+atlas = ExtResource("2_wtq6s")
+region = Rect2(32, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_35wws"]
+atlas = ExtResource("2_wtq6s")
+region = Rect2(48, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3ufra"]
+atlas = ExtResource("2_wtq6s")
+region = Rect2(0, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ar1kw"]
+atlas = ExtResource("2_wtq6s")
+region = Rect2(16, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c7f6f"]
+atlas = ExtResource("2_wtq6s")
+region = Rect2(32, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5ubfw"]
+atlas = ExtResource("2_wtq6s")
+region = Rect2(48, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7tlix"]
+atlas = ExtResource("2_wtq6s")
+region = Rect2(0, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s44rv"]
+atlas = ExtResource("2_wtq6s")
+region = Rect2(16, 48, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_b0465"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7bwoq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_upjco")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5m8dc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5fk30")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u8t8d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qcb01")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r8ut6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_35wws")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3ufra")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ar1kw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c7f6f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5ubfw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7tlix")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s44rv")
+}],
+"loop": true,
+"name": &"default",
+"speed": 14.0
+}]
 
 [node name="Gnat" type="Node2D"]
 script = ExtResource("1_efcg3")
-metadata/_edit_group_ = true
 
 [node name="InitialSpawnPoint" type="Marker2D" parent="."]
 
@@ -17,13 +125,20 @@ wait_time = 2.0
 one_shot = true
 autostart = true
 
-[node name="GnatBody" type="CharacterBody2D" parent="."]
+[node name="WanderArea" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_x7ple")
 
-[node name="Sprite" type="Sprite2D" parent="GnatBody"]
-texture = ExtResource("2_4iq20")
+[node name="GnatBody" type="StaticBody2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GnatBody"]
-shape = SubResource("CircleShape2D_w7en2")
+rotation = 1.5708
+shape = SubResource("CircleShape2D_o5jq8")
 debug_color = Color(0.768627, 0.313726, 0, 1)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="GnatBody"]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_b0465")
+autoplay = "default"
+frame_progress = 0.573725
 
 [connection signal="timeout" from="WaitTimer" to="." method="_on_wait_timer_timeout"]
