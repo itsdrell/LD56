@@ -20,7 +20,8 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if not captured : move(delta)
-	test()
+	
+	#test()
 	#queue_redraw()
 
 func test() :
@@ -52,9 +53,16 @@ func _on_wait_timer_timeout() -> void:
 	pickPoint()
 
 func _on_gnat_body_entered(body: Node2D) -> void:
-	if (body.name == "web") and not captured : 
+	print(body.name)
+	print(body.get_groups())
+	if (body.is_in_group("Web")) and not captured and $ImmunityTimer.time_left == 0 : 
 		captured = true
 		$GnatBody/AnimatedSprite2D.stop()
-		$GnatBody/AnimatedSprite2D.play("captured")
-		$capturedTimer.start()
-	
+		$GnatBody/AnimatedSprite2D.play("Captured")
+		$CapturedTimer.start()
+
+func _on_captured_timer_timeout() -> void:
+	captured = false
+	$ImmunityTimer.start()
+	$GnatBody/AnimatedSprite2D.stop()
+	$GnatBody/AnimatedSprite2D.play("Flight")

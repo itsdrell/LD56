@@ -1,21 +1,31 @@
-[gd_scene load_steps=6 format=3 uid="uid://bd2aairqili4s"]
+[gd_scene load_steps=7 format=3 uid="uid://bd2aairqili4s"]
 
+[ext_resource type="Texture2D" uid="uid://bq28yi7a1xctv" path="res://Art/WhiteTexture.png" id="1_dtocn"]
 [ext_resource type="PackedScene" uid="uid://dnbulb6vix5l1" path="res://Bugs/Gnats/gnat.tscn" id="1_vhflp"]
 [ext_resource type="Texture2D" uid="uid://cuc51d7lvdjpg" path="res://Art/BrownTexture.png" id="1_yboag"]
 [ext_resource type="PackedScene" uid="uid://cpr172uk3vnmn" path="res://Spider/Spider.tscn" id="3_4v7rn"]
+[ext_resource type="PackedScene" uid="uid://bdt6jh1dm8eo3" path="res://Web/Web.tscn" id="5_cqq83"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qo4gq"]
 size = Vector2(32, 32)
 
-[sub_resource type="Resource" id="Resource_soy3r"]
-metadata/__load_path__ = "res://Web/Web.tscn"
-
 [node name="MetricsTest" type="Node2D"]
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+visible = false
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+texture = ExtResource("1_dtocn")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 1600, 900)
 
 [node name="Walls" type="StaticBody2D" parent="."]
 texture_repeat = 2
-position = Vector2(58, 502)
-scale = Vector2(2, 30)
+position = Vector2(58, 484)
+scale = Vector2(2, 26)
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Walls"]
@@ -26,9 +36,9 @@ shape = SubResource("RectangleShape2D_qo4gq")
 
 [node name="Walls2" type="StaticBody2D" parent="."]
 texture_repeat = 2
-position = Vector2(506, 54)
+position = Vector2(346, 54)
 rotation = 1.5708
-scale = Vector2(2, 30)
+scale = Vector2(2, 20)
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Walls2"]
@@ -51,8 +61,12 @@ texture = ExtResource("1_yboag")
 shape = SubResource("RectangleShape2D_qo4gq")
 
 [node name="Gnat" parent="." instance=ExtResource("1_vhflp")]
-position = Vector2(148, 231)
+position = Vector2(136, 280)
+
+[node name="Gnat2" parent="." instance=ExtResource("1_vhflp")]
+position = Vector2(288, 128)
 
 [node name="Spider" parent="." instance=ExtResource("3_4v7rn")]
-position = Vector2(80, 106)
-WebScene = SubResource("Resource_soy3r")
+position = Vector2(90, 88)
+WebScene = ExtResource("5_cqq83")
+metadata/_edit_lock_ = true

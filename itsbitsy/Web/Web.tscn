@@ -12,7 +12,7 @@ z_index = -1
 texture = ExtResource("1_bb12g")
 script = ExtResource("2_f3jfy")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="StaticBody2D" type="StaticBody2D" parent="." groups=["Web"]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 shape = SubResource("SegmentShape2D_tiluj")

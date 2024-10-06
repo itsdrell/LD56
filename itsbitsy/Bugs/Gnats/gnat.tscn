@@ -70,6 +70,14 @@ region = Rect2(16, 48, 16, 16)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("2_4iq20")
+}],
+"loop": true,
+"name": &"Captured",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_7bwoq")
 }, {
 "duration": 1.0,
@@ -114,14 +122,6 @@ animations = [{
 "loop": true,
 "name": &"Flight",
 "speed": 14.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("2_4iq20")
-}],
-"loop": true,
-"name": &"captured",
-"speed": 5.0
 }]
 
 [node name="Gnat" type="Node2D"]
@@ -135,6 +135,11 @@ one_shot = true
 autostart = true
 
 [node name="CapturedTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
+[node name="ImmunityTimer" type="Timer" parent="."]
+one_shot = true
 
 [node name="WanderArea" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_x7ple")
@@ -149,8 +154,9 @@ debug_color = Color(0.768627, 0.313726, 0, 1)
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="GnatBody"]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_b0465")
-animation = &"captured"
+animation = &"Flight"
 autoplay = "Flight"
 
 [connection signal="timeout" from="WaitTimer" to="." method="_on_wait_timer_timeout"]
+[connection signal="timeout" from="CapturedTimer" to="." method="_on_captured_timer_timeout"]
 [connection signal="body_entered" from="GnatBody" to="." method="_on_gnat_body_entered"]
