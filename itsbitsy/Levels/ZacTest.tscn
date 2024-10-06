@@ -37,8 +37,9 @@ position = Vector2(-0.5, -108)
 shape = SubResource("RectangleShape2D_fdfov")
 
 [node name="Spider" parent="." instance=ExtResource("2_jyb26")]
-position = Vector2(404, 303)
+position = Vector2(620, 135)
 skew = -0.000368714
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(574, 325)
+position = Vector2(584, 216)
+zoom = Vector2(3, 3)

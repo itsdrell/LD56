@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://bdt6jh1dm8eo3"]
+
+[ext_resource type="Texture2D" uid="uid://bq28yi7a1xctv" path="res://Art/WhiteTexture.png" id="1_bb12g"]
+[ext_resource type="Script" path="res://Web/web.gd" id="2_f3jfy"]
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_tiluj"]
+resource_local_to_scene = true
+
+[node name="Web" type="Line2D"]
+auto_translate_mode = 2
+z_index = -1
+texture = ExtResource("1_bb12g")
+script = ExtResource("2_f3jfy")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("SegmentShape2D_tiluj")
+debug_color = Color(0.666667, 0.313726, 1, 0.807843)
