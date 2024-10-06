@@ -167,7 +167,7 @@ one_shot = true
 autostart = true
 
 [node name="CapturedTimer" type="Timer" parent="."]
-wait_time = 5.0
+wait_time = 10.0
 one_shot = true
 
 [node name="ImmunityTimer" type="Timer" parent="."]
@@ -178,7 +178,7 @@ shape = SubResource("CircleShape2D_x7ple")
 
 [node name="GnatBody" type="Area2D" parent="." groups=["Bugs"]]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="GnatBody"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GnatBody" groups=["Bugs"]]
 rotation = 1.5708
 shape = SubResource("CircleShape2D_o5jq8")
 debug_color = Color(0.768627, 0.313726, 0, 1)

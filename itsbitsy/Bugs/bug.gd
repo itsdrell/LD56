@@ -6,6 +6,7 @@ class_name Bug
 
 #captured vars
 var captured : bool = false
+var webStuckIn : Node2D = null
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -18,6 +19,9 @@ func _process(delta: float) -> void:
 
 func isCaptured() :
 	return captured
+	
+func onReleased() :
+	pass
 	
 func onEaten() :
 	queue_free();

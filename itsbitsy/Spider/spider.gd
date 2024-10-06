@@ -151,3 +151,13 @@ func _on_area_shape_exited(area_rid: RID, area: Area2D, area_shape_index: int, l
 	if thePrey != null :
 		if area.owner == thePrey :
 			thePrey = null
+
+
+func _on_body_entered(body: Node2D) -> void:
+	if body.owner is Web :
+		body.owner.isSpiderOnMe = true
+		
+
+func _on_body_exited(body: Node2D) -> void:
+	if body.owner is Web :
+		body.owner.isSpiderOnMe = false

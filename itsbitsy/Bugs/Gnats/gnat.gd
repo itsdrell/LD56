@@ -49,16 +49,18 @@ func _on_wait_timer_timeout() -> void:
 	pickPoint()
 
 func _on_gnat_body_entered(body: Node2D) -> void:
-	print(body.name)
-	print(body.get_groups())
 	if (body.is_in_group("Web")) and not captured and $ImmunityTimer.time_left == 0 : 
-		captured = true
-		$GnatBody/AnimatedSprite2D.stop()
-		$GnatBody/AnimatedSprite2D.play("Captured")
-		$CapturedTimer.start()
+		if body.owner is Web : 
+			if !body.owner.isBroken :
+				captured = true
+				webStuckIn = body.owner
+				$GnatBody/AnimatedSprite2D.stop()
+				$GnatBody/AnimatedSprite2D.play("Captured")
+				$CapturedTimer.start()
 
 func _on_captured_timer_timeout() -> void:
 	captured = false
+	webStuckIn.isBroken = true
 	$ImmunityTimer.start()
 	$GnatBody/AnimatedSprite2D.stop()
 	$GnatBody/AnimatedSprite2D.play("Flight")
