@@ -139,6 +139,6 @@ debug_color = Color(0.768627, 0.313726, 0, 1)
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_b0465")
 autoplay = "default"
-frame_progress = 0.573725
+frame_progress = 0.613921
 
 [connection signal="timeout" from="WaitTimer" to="." method="_on_wait_timer_timeout"]

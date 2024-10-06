@@ -9,19 +9,18 @@ var velocity = Vector2.ZERO
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	$WaitTimer.start()
+	$WaitTimer.start(randf_range(0.5,1))
 	wanderMax = $WanderArea.shape.radius - $GnatBody/CollisionShape2D.shape.radius
 	
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	move(delta)	
-	queue_redraw()
+	#queue_redraw()
 
-func _draw() -> void:
-	draw_circle($InitialSpawnPoint.position, wanderMax, Color.SKY_BLUE)
-	draw_circle($InitialSpawnPoint.position, 3, Color.YELLOW)
-	draw_circle(targetPosition, 3, Color.DARK_RED)
+#func _draw() -> void:
+	#draw_circle($InitialSpawnPoint.position, wanderMax, Color.SKY_BLUE)
+	#draw_circle($InitialSpawnPoint.position, 3, Color.YELLOW)
+	#draw_circle(targetPosition, 3, Color.DARK_RED)
 	
 func move(delta: float):
 	#--- MOVEMENT ---
