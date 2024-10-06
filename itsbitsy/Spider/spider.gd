@@ -1,6 +1,6 @@
 extends Area2D
 
-@export var speed = 100 # How fast the player will move (pixels/sec).
+@export var speed = 200 # How fast the player will move (pixels/sec).
 var edgeOfSprite 
 var nextToSpider
 var DesiredPosition
@@ -17,6 +17,11 @@ var angleA = 0
 @export var AddedWebLength = 32
 @export var WebScene : PackedScene
 
+@export var ThreadConsumeRate = 5;
+@export var PercentOfThreadLeft = 100;
+
+var thePrey : Bug
+
 #camera stuff
 @export var WorldBounds : RectangleShape2D
 
@@ -25,8 +30,6 @@ func _ready() -> void:
 	DesiredPosition = position
 
 func _draw() -> void:
-	#draw_circle($Check.position, 64, Color.YELLOW)
-
 	if inWebMode:
 		draw_line(to_local(StartingWebAnchorPoint), to_local(position), Color.WHITE, 6)
 
@@ -39,14 +42,18 @@ func _process(delta):
 		WebModeUpdate(delta);
 	
 	var checkOverlaps = $Check.get_overlapping_bodies();
-	print(checkOverlaps)
+	
+	#todo can make this not in tick but w/e
+	var progressBar = $SpiderHUDControl.get_node("SilkBar")
+	progressBar.value = PercentOfThreadLeft
 	
 	queue_redraw()
 	
 func WebModeUpdate(delta):
 	var desired_velocity = Vector2.ZERO # The player's movement vector.
-	if Input.is_action_pressed("move_down"):
+	if Input.is_action_pressed("move_down") and PercentOfThreadLeft > 0:
 		WebLength += AddedWebLength * delta
+		PercentOfThreadLeft -= ThreadConsumeRate * delta
 		
 	if Input.is_action_just_released("move_left"):
 		angleV -= SwingInputForce * delta
@@ -79,12 +86,27 @@ func EndWebMode() :
 	inWebMode = false
 	WebLength = AddedWebLength
 
+func OnInteract() :
+	
+	if thePrey != null : 
+		var result = thePrey.onEaten()
+		PercentOfThreadLeft += result
+		thePrey = null
+		return true
+	
+	if PercentOfThreadLeft > 0 : 
+		inWebMode = true 
+		StartingWebAnchorPoint = position
+		return true
+		
+	return false
+
 func UpdateNormalMovement(delta):
 	
 	if Input.is_action_just_released("interact"):
-		inWebMode = true 
-		StartingWebAnchorPoint = position
-		return
+		var didWeInteract = OnInteract()
+		if didWeInteract : 
+			return
 	
 	var new_velocity = CalculateVelocity();
 	if(new_velocity == Vector2.ZERO):
@@ -116,3 +138,16 @@ func _physics_process(delta):
 	
 	if isValidMoveLocation :
 		position = DesiredPosition
+
+func _on_area_shape_entered(area_rid: RID, area: Area2D, area_shape_index: int, local_shape_index: int) -> void:
+	if area.is_in_group("Bugs") : 	
+		var theGnat = area.owner
+		if theGnat is Bug and inWebMode == false:
+			if theGnat.isCaptured() : 
+				thePrey = theGnat
+
+
+func _on_area_shape_exited(area_rid: RID, area: Area2D, area_shape_index: int, local_shape_index: int) -> void:
+	if thePrey != null :
+		if area.owner == thePrey :
+			thePrey = null

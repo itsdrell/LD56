@@ -6,16 +6,16 @@
 
 [node name="SilkBar" type="ProgressBar" parent="."]
 texture_filter = 1
-offset_left = 55.0
-offset_top = 586.0
-offset_right = 187.0
-offset_bottom = 622.0
+offset_left = 979.0
+offset_top = 580.0
+offset_right = 1111.0
+offset_bottom = 616.0
 value = 50.0
 show_percentage = false
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
-position = Vector2(12, 573)
+position = Vector2(936, 567)
 texture = ExtResource("1_ptq8t")
 centered = false
 region_filter_clip_enabled = true

@@ -1,6 +1,9 @@
 extends Node2D
 class_name Bug
 
+# percent in 0-100 range
+@export var SilkGiveOnDeath = 10;
+
 #captured vars
 var captured : bool = false
 
@@ -17,7 +20,8 @@ func isCaptured() :
 	return captured
 	
 func onEaten() :
-	pass
+	queue_free();
+	return SilkGiveOnDeath;
 
 func test() :
 	print("parent")

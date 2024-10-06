@@ -2,10 +2,8 @@
 
 [ext_resource type="Script" path="res://Spider/spider.gd" id="1_nrr8b"]
 [ext_resource type="Texture2D" uid="uid://d67srvsfwtmu" path="res://Art/Spider.png" id="2_0clo6"]
+[ext_resource type="PackedScene" uid="uid://bdt6jh1dm8eo3" path="res://Web/Web.tscn" id="2_ykrpw"]
 [ext_resource type="PackedScene" uid="uid://b8b43ee1m2u14" path="res://UI/SpiderHUD/SpiderHUD.tscn" id="3_c2pgc"]
-
-[sub_resource type="Resource" id="Resource_3dpy8"]
-metadata/__load_path__ = "res://Web/Web.tscn"
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ghfy0"]
 radius = 16.0
@@ -29,7 +27,7 @@ func _process(delta: float) -> void:
 
 [node name="Spider" type="Area2D"]
 script = ExtResource("1_nrr8b")
-WebScene = SubResource("Resource_3dpy8")
+WebScene = ExtResource("2_ykrpw")
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -55,3 +53,7 @@ position_smoothing_enabled = true
 script = SubResource("GDScript_errno")
 
 [node name="SpiderHUDControl" parent="." instance=ExtResource("3_c2pgc")]
+
+[connection signal="area_shape_entered" from="." to="." method="_on_area_shape_entered"]
+[connection signal="area_shape_exited" from="." to="." method="_on_area_shape_exited"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
