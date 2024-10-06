@@ -1,7 +1,7 @@
-[gd_scene load_steps=21 format=3 uid="uid://dnbulb6vix5l1"]
+[gd_scene load_steps=26 format=3 uid="uid://dnbulb6vix5l1"]
 
 [ext_resource type="Script" path="res://Bugs/Gnats/gnat.gd" id="1_efcg3"]
-[ext_resource type="Texture2D" uid="uid://bq28yi7a1xctv" path="res://Art/WhiteTexture.png" id="2_4iq20"]
+[ext_resource type="Texture2D" uid="uid://m5bwwri22hnn" path="res://Art/CapturedGnat.png" id="2_dpvyd"]
 [ext_resource type="Texture2D" uid="uid://1gek7wmrxq8" path="res://Art/GnatFlight.png" id="2_wtq6s"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_x7ple"]
@@ -9,6 +9,26 @@ radius = 40.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_o5jq8"]
 radius = 8.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xeeqw"]
+atlas = ExtResource("2_dpvyd")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dhqyi"]
+atlas = ExtResource("2_dpvyd")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xhlmu"]
+atlas = ExtResource("2_dpvyd")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qbm3g"]
+atlas = ExtResource("2_dpvyd")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rq4en"]
+atlas = ExtResource("2_dpvyd")
+region = Rect2(16, 16, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7bwoq"]
 atlas = ExtResource("2_wtq6s")
@@ -70,11 +90,23 @@ region = Rect2(16, 48, 16, 16)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_4iq20")
+"texture": SubResource("AtlasTexture_xeeqw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dhqyi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xhlmu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qbm3g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rq4en")
 }],
 "loop": true,
 "name": &"Captured",
-"speed": 1.0
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -154,8 +186,9 @@ debug_color = Color(0.768627, 0.313726, 0, 1)
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="GnatBody"]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_b0465")
-animation = &"Flight"
+animation = &"Captured"
 autoplay = "Flight"
+frame_progress = 0.0746791
 
 [connection signal="timeout" from="WaitTimer" to="." method="_on_wait_timer_timeout"]
 [connection signal="timeout" from="CapturedTimer" to="." method="_on_captured_timer_timeout"]

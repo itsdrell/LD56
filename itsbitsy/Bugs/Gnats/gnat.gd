@@ -22,6 +22,7 @@ func _process(delta: float) -> void:
 func test() :
 	print("child")
 	super.test()
+	
 #func _draw() -> void:
 	#draw_circle($InitialSpawnPoint.position, wanderMax, Color.SKY_BLUE)
 	#draw_circle($InitialSpawnPoint.position, 3, Color.YELLOW)
