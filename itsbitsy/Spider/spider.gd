@@ -214,6 +214,10 @@ func _on_area_shape_exited(area_rid: RID, area: Area2D, area_shape_index: int, l
 	if thePrey != null :
 		if area.owner == thePrey :
 			thePrey = null
+			
+	if theCurrentInteract != null :
+		if area.owner == theCurrentInteract :
+			theCurrentInteract = null
 
 
 func _on_body_entered(body: Node2D) -> void:
