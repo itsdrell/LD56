@@ -5,7 +5,7 @@ extends Bug
 @export var MaxRotation : int
 @export var FlutterAmount : int
 
-
+var isHidden = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -14,6 +14,15 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	#check for lamp
+	if ControlInteract.GetCurrentState() :
+		$".".show()
+	else: 
+		$".".hide()
+		$ImmunityTimer.start()
+		captured = false
+		$MothBody/AnimatedSprite2D.play("Flight")
+		
+		
 	if (not isCaptured()) :	
 		move(delta)
 		flutter(delta)

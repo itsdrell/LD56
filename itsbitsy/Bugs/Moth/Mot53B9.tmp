@@ -1,0 +1,87 @@
+[gd_scene load_steps=11 format=3 uid="uid://boa4byck0v0h0"]
+
+[ext_resource type="Script" path="res://Bugs/Moth/moth.gd" id="1_7lexb"]
+[ext_resource type="Texture2D" uid="uid://m5bwwri22hnn" path="res://Art/CapturedGnat.png" id="2_yb37v"]
+[ext_resource type="Texture2D" uid="uid://cd0046kcdgq2e" path="res://Art/MothFlight.png" id="3_ic8nn"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xeeqw"]
+atlas = ExtResource("2_yb37v")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dhqyi"]
+atlas = ExtResource("2_yb37v")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xhlmu"]
+atlas = ExtResource("2_yb37v")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qbm3g"]
+atlas = ExtResource("2_yb37v")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rq4en"]
+atlas = ExtResource("2_yb37v")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0rh4p"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xeeqw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dhqyi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xhlmu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qbm3g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rq4en")
+}],
+"loop": true,
+"name": &"Captured",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_ic8nn")
+}],
+"loop": true,
+"name": &"Flight",
+"speed": 14.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ols4i"]
+radius = 8.0
+
+[node name="Moth" type="Node2D"]
+rotation = 1.5708
+script = ExtResource("1_7lexb")
+
+[node name="CapturedTimer" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+
+[node name="ImmunityTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="MothBody" type="Area2D" parent="." groups=["Bugs"]]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="MothBody"]
+texture_filter = 1
+position = Vector2(0, 12)
+sprite_frames = SubResource("SpriteFrames_0rh4p")
+animation = &"Captured"
+autoplay = "Flight"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MothBody" groups=["Bugs"]]
+position = Vector2(0, 12)
+shape = SubResource("CapsuleShape2D_ols4i")
+debug_color = Color(0.768627, 0.313726, 0, 0.278431)
+
+[connection signal="timeout" from="CapturedTimer" to="." method="_on_captured_timer_timeout"]
+[connection signal="body_entered" from="MothBody" to="." method="_on_moth_body_entered"]

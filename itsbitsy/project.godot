@@ -20,6 +20,7 @@ config/icon="res://Art/icon.svg"
 Bugs=""
 Web=""
 Wall=""
+Interacts=""
 
 [input]
 

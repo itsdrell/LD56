@@ -12,7 +12,9 @@ func _process(delta: float) -> void:
 
 func _draw() -> void:
 	if currentState :
-		draw_circle($Area2D.position, 20, Color.SKY_BLUE)
+		draw_circle($Area2D.position, 30, Color.SKY_BLUE)
+	else :
+		draw_circle($Area2D.position, 30, Color.DARK_RED)
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	print(body)

@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://x6f2m23iwlnv"]
+
+[ext_resource type="Texture2D" uid="uid://cuc51d7lvdjpg" path="res://Art/BrownTexture.png" id="1_g22r6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qo4gq"]
+size = Vector2(32, 32)
+
+[node name="Walls" type="StaticBody2D"]
+texture_repeat = 2
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_g22r6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["Wall"]]
+shape = SubResource("RectangleShape2D_qo4gq")

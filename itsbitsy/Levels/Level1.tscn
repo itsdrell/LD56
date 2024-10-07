@@ -1,0 +1,117 @@
+[gd_scene load_steps=10 format=3 uid="uid://5tnmupnc6i1f"]
+
+[ext_resource type="Texture2D" uid="uid://bdbxwo81887pk" path="res://Art/BarnBackground.png" id="1_v6voo"]
+[ext_resource type="Texture2D" uid="uid://cdpq2i1aqlmv0" path="res://Art/Barn_Para1.png" id="2_3yjrp"]
+[ext_resource type="PackedScene" uid="uid://cpr172uk3vnmn" path="res://Spider/Spider.tscn" id="2_abppc"]
+[ext_resource type="PackedScene" uid="uid://x6f2m23iwlnv" path="res://Levels/Objects/walls.tscn" id="3_7s7vf"]
+[ext_resource type="PackedScene" uid="uid://bdby38ln2h7e7" path="res://Interacts/LightSwitch/LightSwitch.tscn" id="4_fp7xj"]
+[ext_resource type="PackedScene" uid="uid://dnbulb6vix5l1" path="res://Bugs/Gnats/gnat.tscn" id="5_tq6s2"]
+[ext_resource type="PackedScene" uid="uid://boa4byck0v0h0" path="res://Bugs/Moth/Moth.tscn" id="6_7pbpp"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d07r0"]
+size = Vector2(922, 708)
+
+[sub_resource type="Curve2D" id="Curve2D_87m4i"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 712, 260, 0, 0, 0, 0, 748, 252, 0, 0, 0, 0, 727, 285, 0, 0, 0, 0, 753, 316, 0, 0, 0, 0, 732, 385, 0, 0, 0, 0, 756, 421, 0, 0, 0, 0, 722, 501, 0, 0, 0, 0, 763, 474, 0, 0, 0, 0, 823, 501, 0, 0, 0, 0, 779, 452, 0, 0, 0, 0, 784, 380, 0, 0, 0, 0, 764, 359, 0, 0, 0, 0, 787, 296, 0, 0, 0, 0, 759, 272, 0, 0, 0, 0, 786, 238, 0, 0, 0, 0, 733, 217, 0, 0, 0, 0, 713, 259)
+}
+point_count = 17
+
+[node name="Level1" type="Node2D"]
+
+[node name="CameraBounds" type="CollisionShape2D" parent="."]
+position = Vector2(467, 358)
+shape = SubResource("RectangleShape2D_d07r0")
+debug_color = Color(0, 0.6, 0.701961, 0.482353)
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+scale = Vector2(0.45, 0.45)
+transform = Transform2D(0.45, 0, 0, 0.45, 0, 0)
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.1, 0.1)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+texture = ExtResource("1_v6voo")
+centered = false
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.2, 0.2)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2"]
+texture = ExtResource("2_3yjrp")
+centered = false
+
+[node name="Walls" type="Node2D" parent="."]
+
+[node name="Walls" parent="Walls" instance=ExtResource("3_7s7vf")]
+position = Vector2(61, 361)
+scale = Vector2(2, 20.64)
+
+[node name="Walls2" parent="Walls" instance=ExtResource("3_7s7vf")]
+position = Vector2(493, 62)
+rotation = 1.5708
+scale = Vector2(2, 25)
+
+[node name="Walls3" parent="Walls" instance=ExtResource("3_7s7vf")]
+position = Vector2(208, 207)
+rotation = 0.785398
+scale = Vector2(2, 12.4163)
+
+[node name="Walls4" parent="Walls" instance=ExtResource("3_7s7vf")]
+position = Vector2(458, 532)
+scale = Vector2(5, 10)
+
+[node name="Walls5" parent="Walls" instance=ExtResource("3_7s7vf")]
+position = Vector2(841, 281)
+scale = Vector2(3.08, 10)
+
+[node name="Spider" parent="." node_paths=PackedStringArray("CameraBounds") instance=ExtResource("2_abppc")]
+position = Vector2(86, 80)
+CameraBounds = NodePath("../CameraBounds")
+
+[node name="LightSwitch" parent="." instance=ExtResource("4_fp7xj")]
+position = Vector2(460, 459)
+
+[node name="Bugs" type="Node2D" parent="."]
+
+[node name="Gnat" parent="Bugs" instance=ExtResource("5_tq6s2")]
+position = Vector2(148, 154)
+
+[node name="Gnat2" parent="Bugs" instance=ExtResource("5_tq6s2")]
+position = Vector2(140, 389)
+
+[node name="Gnat3" parent="Bugs" instance=ExtResource("5_tq6s2")]
+position = Vector2(717, 142)
+
+[node name="Path2D" type="Path2D" parent="Bugs"]
+position = Vector2(-40, 13)
+curve = SubResource("Curve2D_87m4i")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Bugs/Path2D"]
+position = Vector2(712, 260)
+rotation = -0.218669
+
+[node name="Moth" parent="Bugs/Path2D/PathFollow2D" node_paths=PackedStringArray("PathToFollow", "ControlInteract") instance=ExtResource("6_7pbpp")]
+PathToFollow = NodePath("..")
+MaxRotation = 25
+FlutterAmount = 30
+SilkGiveOnDeath = 30
+speed = 30
+ControlInteract = NodePath("../../../../LightSwitch")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 885.0
+offset_top = 127.0
+offset_right = 1191.0
+offset_bottom = 214.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 1.57424
+text = "LANTERN"
+scroll_active = false
+autowrap_mode = 0
+tab_size = 14

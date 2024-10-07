@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cpr172uk3vnmn"]
+[gd_scene load_steps=7 format=3 uid="uid://cpr172uk3vnmn"]
 
 [ext_resource type="Script" path="res://Spider/spider.gd" id="1_nrr8b"]
 [ext_resource type="Texture2D" uid="uid://d67srvsfwtmu" path="res://Art/Spider.png" id="2_0clo6"]
@@ -10,20 +10,6 @@ radius = 16.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_xfldv"]
 radius = 13.0
-
-[sub_resource type="GDScript" id="GDScript_errno"]
-script/source = "extends Camera2D
-
-@export var worldBounds : Shape2D
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-"
 
 [node name="Spider" type="Area2D"]
 script = ExtResource("1_nrr8b")
@@ -50,7 +36,6 @@ limit_left = 0
 limit_top = 0
 limit_smoothed = true
 position_smoothing_enabled = true
-script = SubResource("GDScript_errno")
 
 [node name="SpiderHUDControl" parent="." instance=ExtResource("3_c2pgc")]
 

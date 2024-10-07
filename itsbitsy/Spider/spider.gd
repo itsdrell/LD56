@@ -30,11 +30,20 @@ var thePrey : Bug
 var theCurrentInteract : Interact
 
 #camera stuff
-@export var WorldBounds : RectangleShape2D
+@export var CameraBounds : CollisionShape2D 
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	DesiredPosition = position
+	if CameraBounds != null :
+		var boundsPosX = CameraBounds.position.x
+		var boundsPosY = CameraBounds.position.y
+		var boundsSizeX = CameraBounds.shape.get_rect().size.x
+		var boundsSizeY = CameraBounds.shape.get_rect().size.y
+		print("hello")
+		
+		$FollowCamera.limit_right = boundsPosX + (boundsSizeX/2)
+		$FollowCamera.limit_bottom = boundsPosY + (boundsSizeY/2)
 
 func _draw() -> void:
 	if inWebMode:

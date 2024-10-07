@@ -1,9 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://bd2aairqili4s"]
+[gd_scene load_steps=9 format=3 uid="uid://bd2aairqili4s"]
 
 [ext_resource type="Texture2D" uid="uid://bq28yi7a1xctv" path="res://Art/WhiteTexture.png" id="1_dtocn"]
 [ext_resource type="PackedScene" uid="uid://dnbulb6vix5l1" path="res://Bugs/Gnats/gnat.tscn" id="1_vhflp"]
 [ext_resource type="Texture2D" uid="uid://cuc51d7lvdjpg" path="res://Art/BrownTexture.png" id="1_yboag"]
-[ext_resource type="PackedScene" uid="uid://x6f2m23iwlnv" path="res://Levels/Objects/walls.tscn" id="2_e5ia0"]
 [ext_resource type="PackedScene" uid="uid://cpr172uk3vnmn" path="res://Spider/Spider.tscn" id="3_4v7rn"]
 [ext_resource type="PackedScene" uid="uid://boa4byck0v0h0" path="res://Bugs/Moth/Moth.tscn" id="5_8wgjt"]
 [ext_resource type="PackedScene" uid="uid://bdby38ln2h7e7" path="res://Interacts/LightSwitch/LightSwitch.tscn" id="6_umh3i"]
@@ -30,9 +29,17 @@ centered = false
 region_enabled = true
 region_rect = Rect2(0, 0, 1600, 900)
 
-[node name="Walls" parent="." instance=ExtResource("2_e5ia0")]
-position = Vector2(59, 421)
-scale = Vector2(2, 25)
+[node name="Walls" type="StaticBody2D" parent="."]
+texture_repeat = 2
+position = Vector2(58, 484)
+scale = Vector2(2, 26)
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Walls"]
+texture = ExtResource("1_yboag")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls"]
+shape = SubResource("RectangleShape2D_qo4gq")
 
 [node name="Walls2" type="StaticBody2D" parent="."]
 texture_repeat = 2
@@ -44,7 +51,7 @@ metadata/_edit_group_ = true
 [node name="Sprite2D" type="Sprite2D" parent="Walls2"]
 texture = ExtResource("1_yboag")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls2" groups=["Wall"]]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls2"]
 shape = SubResource("RectangleShape2D_qo4gq")
 
 [node name="Walls3" type="StaticBody2D" parent="."]
@@ -57,7 +64,7 @@ metadata/_edit_group_ = true
 [node name="Sprite2D" type="Sprite2D" parent="Walls3"]
 texture = ExtResource("1_yboag")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls3" groups=["Wall"]]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls3"]
 shape = SubResource("RectangleShape2D_qo4gq")
 
 [node name="LightSwitch" parent="." instance=ExtResource("6_umh3i")]
@@ -74,7 +81,7 @@ position = Vector2(90, 88)
 metadata/_edit_lock_ = true
 
 [node name="Path2D" type="Path2D" parent="."]
-position = Vector2(-289, -83)
+position = Vector2(-233, -80)
 scale = Vector2(0.983606, 0.988764)
 curve = SubResource("Curve2D_j5yok")
 
