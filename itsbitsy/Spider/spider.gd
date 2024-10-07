@@ -61,14 +61,22 @@ func _process(delta):
 	
 	var checkOverlaps = $Check.get_overlapping_bodies();
 	
-	if get_overlapping_bodies().size() == 0 :
+	if $SwingCollision.get_overlapping_bodies().size() == 0 :
 		isColliding = false
 	
 	#todo can make this not in tick but w/e
 	var progressBar = $SpiderHUDControl.get_node("SilkBar")
 	progressBar.value = PercentOfThreadLeft
 	
+	DebugStuff()
 	queue_redraw()
+	
+func DebugStuff() :
+	
+	if Input.is_action_just_pressed("zoom_in") :
+		$FollowCamera.zoom += Vector2(1,1)
+	if Input.is_action_just_released("zoom_out") :
+		$FollowCamera.zoom -= Vector2(1, 1)
 	
 func WebModeUpdate(delta):
 	if !isColliding :
@@ -138,6 +146,10 @@ func EndWebMode(spawnWeb) :
 	
 	if spawnWeb :
 		var newWeb = WebScene.instantiate()
+		
+		var testasd = to_local(StartingWebAnchorPoint)
+		var tesadf = to_local(position)
+		
 		newWeb.add_point(to_local(StartingWebAnchorPoint))
 		newWeb.add_point(to_local(position))
 		newWeb.position = position
@@ -147,6 +159,11 @@ func EndWebMode(spawnWeb) :
 	inWebMode = false
 	canExit = false;
 	WebLength = AddedWebLength
+
+func StartWebMode() :
+		inWebMode = true 
+		StartingWebAnchorPoint = position
+		OriginalThreadAmountPercent = PercentOfThreadLeft
 
 func OnInteract() :
 	
@@ -161,9 +178,7 @@ func OnInteract() :
 		return true
 
 	if PercentOfThreadLeft > 0 : 
-		inWebMode = true 
-		StartingWebAnchorPoint = position
-		OriginalThreadAmountPercent = PercentOfThreadLeft
+		StartWebMode()
 		return true
 		
 	return false
@@ -182,6 +197,15 @@ func UpdateNormalMovement(delta):
 	DesiredPosition = position + (new_velocity * delta * speed)
 	
 	$Check.position = $Check.to_local(DesiredPosition);
+	$RayCast2D.position = to_local(position);
+	$RayCast2D.target_position = to_local(DesiredPosition) + new_velocity * 10
+	
+	#if !$RayCast2D.is_colliding() :
+	#	var dir = (DesiredPosition - position).normalized()
+	#	var dot = dir.dot(Vector2.UP)
+		
+	#	if dot < 0 :
+	#		StartWebMode()
 	
 func CalculateVelocity() -> Vector2:
 	var desired_velocity = Vector2.ZERO # The player's movement vector.
@@ -202,6 +226,9 @@ func _physics_process(delta):
 	
 	var checkOverlaps = $Check.get_overlapping_bodies();
 	var isValidMoveLocation = !checkOverlaps.is_empty()
+	
+	isValidMoveLocation = $RayCast2D.is_colliding()
+	#print($RayCast2D.get_collider())
 	
 	if isValidMoveLocation :
 		position = DesiredPosition
@@ -233,8 +260,14 @@ func _on_body_entered(body: Node2D) -> void:
 	if body.owner is Web :
 		body.owner.isSpiderOnMe = true
 		
-	isColliding = true;
+	#isColliding = true;
 
 func _on_body_exited(body: Node2D) -> void:
 	if body.owner is Web :
 		body.owner.isSpiderOnMe = false
+
+
+func _on_swing_collision_body_entered(body: Node2D) -> void:
+	isColliding = true;
+	
+	print(body)

@@ -45,24 +45,29 @@ centered = false
 [node name="Walls" type="Node2D" parent="."]
 
 [node name="Walls" parent="Walls" instance=ExtResource("3_7s7vf")]
+z_index = -2
 position = Vector2(61, 361)
 scale = Vector2(2, 20.64)
 
 [node name="Walls2" parent="Walls" instance=ExtResource("3_7s7vf")]
+z_index = -2
 position = Vector2(493, 62)
 rotation = 1.5708
 scale = Vector2(2, 25)
 
 [node name="Walls3" parent="Walls" instance=ExtResource("3_7s7vf")]
+z_index = -2
 position = Vector2(208, 207)
 rotation = 0.785398
 scale = Vector2(2, 12.4163)
 
 [node name="Walls4" parent="Walls" instance=ExtResource("3_7s7vf")]
+z_index = -2
 position = Vector2(458, 532)
 scale = Vector2(5, 10)
 
 [node name="Walls5" parent="Walls" instance=ExtResource("3_7s7vf")]
+z_index = -2
 position = Vector2(841, 281)
 scale = Vector2(3.08, 10)
 

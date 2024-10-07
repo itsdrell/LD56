@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://cpr172uk3vnmn"]
+[gd_scene load_steps=8 format=3 uid="uid://cpr172uk3vnmn"]
 
 [ext_resource type="Script" path="res://Spider/spider.gd" id="1_nrr8b"]
 [ext_resource type="Texture2D" uid="uid://d67srvsfwtmu" path="res://Art/Spider.png" id="2_0clo6"]
@@ -9,7 +9,10 @@
 radius = 16.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_xfldv"]
-radius = 13.0
+radius = 2.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mygrx"]
+radius = 3.0
 
 [node name="Spider" type="Area2D"]
 script = ExtResource("1_nrr8b")
@@ -25,6 +28,7 @@ shape = SubResource("CircleShape2D_ghfy0")
 debug_color = Color(0.598052, 0.370692, 1, 0.42)
 
 [node name="Check" type="Area2D" parent="."]
+visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Check"]
 shape = SubResource("CircleShape2D_xfldv")
@@ -39,7 +43,17 @@ position_smoothing_enabled = true
 
 [node name="SpiderHUDControl" parent="." instance=ExtResource("3_c2pgc")]
 
+[node name="SwingCollision" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SwingCollision"]
+shape = SubResource("CircleShape2D_mygrx")
+debug_color = Color(0.746509, 0.460705, 0.0888919, 0.42)
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+hit_from_inside = true
+
 [connection signal="area_shape_entered" from="." to="." method="_on_area_shape_entered"]
 [connection signal="area_shape_exited" from="." to="." method="_on_area_shape_exited"]
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]
+[connection signal="body_entered" from="SwingCollision" to="." method="_on_swing_collision_body_entered"]

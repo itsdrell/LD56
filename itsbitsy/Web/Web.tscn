@@ -4,8 +4,9 @@
 [ext_resource type="Script" path="res://Web/web.gd" id="2_f3jfy"]
 [ext_resource type="Texture2D" uid="uid://cal10161hf5yb" path="res://Art/BrokenWeb.png" id="3_pydnw"]
 
-[sub_resource type="SegmentShape2D" id="SegmentShape2D_tiluj"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_eolkx"]
 resource_local_to_scene = true
+size = Vector2(20, 30)
 
 [node name="Web" type="Line2D" groups=["Web"]]
 auto_translate_mode = 2
@@ -18,5 +19,7 @@ BrokenWebTexture = ExtResource("3_pydnw")
 [node name="StaticBody2D" type="StaticBody2D" parent="." groups=["Web"]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-shape = SubResource("SegmentShape2D_tiluj")
+scale = Vector2(0.386607, 2.84)
+shape = SubResource("RectangleShape2D_eolkx")
+one_way_collision_margin = 0.0
 debug_color = Color(0.666667, 0.313726, 1, 0.807843)

@@ -15,7 +15,7 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if !doOnce :
-		CreateCollision(get_point_position(0), get_point_position(1))
+		CreateCollision(get_point_position(1), get_point_position(0))
 		doOnce = true
 		
 	if isBroken :
@@ -27,8 +27,25 @@ func _process(delta: float) -> void:
 	if isBroken :
 		texture = BrokenWebTexture
 		texture_mode = LINE_TEXTURE_STRETCH
+		
+	queue_redraw()
+
+func _draw() -> void:
+	
+	var pos1 = get_point_position(1)
+	var pos2 = get_point_position(0)
+	
+	#draw_circle(pos1, 8, Color.BLACK)
+	#draw_circle(pos2, 8, Color.RED)
 
 func CreateCollision(pos1, pos2):
 	var child = $StaticBody2D.get_node("CollisionShape2D")
-	child.shape.a = pos1;
-	child.shape.b = pos2;
+	
+	var direction = (pos2 - pos1).normalized()
+	var michael = atan2(direction.y, direction.x)
+
+	child.shape.size = Vector2(abs(pos2.y), 16)
+	var newPos = pos2 - (pos2 * .5)
+
+	var newTransform : Transform2D = Transform2D(michael, newPos)
+	child.transform = newTransform
