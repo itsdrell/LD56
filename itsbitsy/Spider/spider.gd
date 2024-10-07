@@ -27,6 +27,7 @@ var canExit = false;
 var distanceNeeded = 16
 
 var thePrey : Bug
+var theCurrentInteract : Interact
 
 #camera stuff
 @export var WorldBounds : RectangleShape2D
@@ -145,7 +146,11 @@ func OnInteract() :
 		PercentOfThreadLeft += result
 		thePrey = null
 		return true
-	
+		
+	if theCurrentInteract != null : 
+		var resuilt = theCurrentInteract.ChangeState()
+		return true
+
 	if PercentOfThreadLeft > 0 : 
 		inWebMode = true 
 		StartingWebAnchorPoint = position
@@ -198,6 +203,11 @@ func _on_area_shape_entered(area_rid: RID, area: Area2D, area_shape_index: int, 
 		if theGnat is Bug and inWebMode == false:
 			if theGnat.isCaptured() : 
 				thePrey = theGnat
+	
+	if area.is_in_group("Interacts") : 	
+		var theInteract = area.owner
+		if theInteract is Interact and inWebMode == false:
+			theCurrentInteract = theInteract
 
 
 func _on_area_shape_exited(area_rid: RID, area: Area2D, area_shape_index: int, local_shape_index: int) -> void:

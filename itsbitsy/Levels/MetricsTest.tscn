@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://bd2aairqili4s"]
+[gd_scene load_steps=9 format=3 uid="uid://bd2aairqili4s"]
 
 [ext_resource type="Texture2D" uid="uid://bq28yi7a1xctv" path="res://Art/WhiteTexture.png" id="1_dtocn"]
 [ext_resource type="PackedScene" uid="uid://dnbulb6vix5l1" path="res://Bugs/Gnats/gnat.tscn" id="1_vhflp"]
 [ext_resource type="Texture2D" uid="uid://cuc51d7lvdjpg" path="res://Art/BrownTexture.png" id="1_yboag"]
 [ext_resource type="PackedScene" uid="uid://cpr172uk3vnmn" path="res://Spider/Spider.tscn" id="3_4v7rn"]
 [ext_resource type="PackedScene" uid="uid://boa4byck0v0h0" path="res://Bugs/Moth/Moth.tscn" id="5_8wgjt"]
+[ext_resource type="PackedScene" uid="uid://bdby38ln2h7e7" path="res://Interacts/LightSwitch/LightSwitch.tscn" id="6_umh3i"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qo4gq"]
 size = Vector2(32, 32)
@@ -65,6 +66,9 @@ texture = ExtResource("1_yboag")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls3"]
 shape = SubResource("RectangleShape2D_qo4gq")
+
+[node name="LightSwitch" parent="." instance=ExtResource("6_umh3i")]
+position = Vector2(58, 419)
 
 [node name="Gnat" parent="." instance=ExtResource("1_vhflp")]
 position = Vector2(136, 280)
