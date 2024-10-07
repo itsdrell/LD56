@@ -1,7 +1,6 @@
 extends Bug
 signal hit
 
-@export var speed = 20 #pixels/sec
 @export var wanderStep = 45 #distance between each wander
 
 #movement vars

@@ -1,13 +1,19 @@
-[gd_scene load_steps=7 format=3 uid="uid://bd2aairqili4s"]
+[gd_scene load_steps=8 format=3 uid="uid://bd2aairqili4s"]
 
 [ext_resource type="Texture2D" uid="uid://bq28yi7a1xctv" path="res://Art/WhiteTexture.png" id="1_dtocn"]
 [ext_resource type="PackedScene" uid="uid://dnbulb6vix5l1" path="res://Bugs/Gnats/gnat.tscn" id="1_vhflp"]
 [ext_resource type="Texture2D" uid="uid://cuc51d7lvdjpg" path="res://Art/BrownTexture.png" id="1_yboag"]
 [ext_resource type="PackedScene" uid="uid://cpr172uk3vnmn" path="res://Spider/Spider.tscn" id="3_4v7rn"]
-[ext_resource type="PackedScene" uid="uid://bdt6jh1dm8eo3" path="res://Web/Web.tscn" id="5_cqq83"]
+[ext_resource type="PackedScene" uid="uid://boa4byck0v0h0" path="res://Bugs/Moth/Moth.tscn" id="5_8wgjt"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qo4gq"]
 size = Vector2(32, 32)
+
+[sub_resource type="Curve2D" id="Curve2D_j5yok"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 414.167, 206, 0, 0, 0, 0, 408.067, 236.341, 0, 0, 0, 0, 404, 256.568, 0, 0, 0, 0, 415, 297.023, 0, 0, 0, 0, 444.667, 288.932, 0, 0, 0, 0, 434.5, 207.011, 0, 0, 0, 0, 414, 206)
+}
+point_count = 7
 
 [node name="MetricsTest" type="Node2D"]
 
@@ -68,5 +74,18 @@ position = Vector2(288, 128)
 
 [node name="Spider" parent="." instance=ExtResource("3_4v7rn")]
 position = Vector2(90, 88)
-WebScene = ExtResource("5_cqq83")
 metadata/_edit_lock_ = true
+
+[node name="Path2D" type="Path2D" parent="."]
+position = Vector2(-233, -80)
+scale = Vector2(0.983606, 0.988764)
+curve = SubResource("Curve2D_j5yok")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+position = Vector2(414.167, 206)
+rotation = 1.7692
+
+[node name="Moth" parent="Path2D/PathFollow2D" node_paths=PackedStringArray("PathToFollow") instance=ExtResource("5_8wgjt")]
+PathToFollow = NodePath("..")
+MaxRotation = 20
+FlutterAmount = 200

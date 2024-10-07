@@ -3,6 +3,7 @@ class_name Bug
 
 # percent in 0-100 range
 @export var SilkGiveOnDeath = 10;
+@export var speed = 20 #pixels/sec
 
 #captured vars
 var captured : bool = false
